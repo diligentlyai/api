@@ -1,0 +1,787 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "DiligentlyAI API",
+    "version": "1.0"
+  },
+  "servers": [{
+    "url": "https://www.aws-lambda-url.com"
+  }],
+  "paths": {
+    "/new_connection": {
+      "post": {
+        "description": "add a new LLM connection with user credentials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "credentials" : {
+                        "type": "object"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_connections": {
+      "get": {
+        "description": "gets user's LLM connections",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string",
+                        "example": "open-ai"
+                      },
+                      "model_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "gpt-4", "gpt-3.5"
+                        ]
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/new_prompt": {
+      "post": {
+        "description": "make new playground/dev prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "env": {
+                    "type": "string",
+                    "example": "playground | dev"
+                  },
+                  "prompt": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/update_prompt": {
+      "post": {
+        "description": "update playground/dev prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete_prompt": {
+      "post": {
+        "description": "delete playground/dev prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_user_prompts": {
+      "get": {
+        "description": "get playground prompts",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_dev_prompts": {
+      "get": {
+        "description": "get dev prompts for an org",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "name": {
+                          "type": "string"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/set_prompt_test": {
+      "post": {
+        "description": "set playground/dev prompt tests",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "prompt_id": {
+                        "type": "string"
+                    },
+                    "test_cases" : {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                    },
+                    "model_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/run_prompt_test": {
+      "post": {
+        "description": "run playground/dev prompt test",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "prompt_id": {
+                        "type": "string"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "model_id": {
+                        "type": "string"
+                      },
+                      "test_case": {
+                        "type": "string"
+                      },
+                      "response": {
+                        "type": "string"
+                      },
+                      "response_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          },
+                          "verification_evaluation": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "prompt_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_test_results": {
+      "post": {
+        "description": "get playground/dev test results",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "filters": {
+                        "type": "object"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "model_id": {
+                        "type": "string"
+                      },
+                      "test_case": {
+                        "type": "string"
+                      },
+                      "response": {
+                        "type": "string"
+                      },
+                      "response_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          },
+                          "verification_evaluation": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "prompt_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/new_qa_deployment": {
+      "post": {
+        "description": "deploy prompt to qa",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "prompt_id": {
+                        "type": "string"
+                    },
+                    "model_id": {
+                      "type": "string"
+                    },
+                    "adjustment_threshold": {
+                      "type": "number"
+                    },
+                    "eval_frequency": {
+                      "type": "number"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "deployment_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_qa_deployments": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "deployment_id": {
+                        "type": "string"
+                      },
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "model_id": {
+                        "type": "string"
+                      },
+                      "adjustment_threshold": {
+                        "type": "number"
+                      },
+                      "eval_frequency": {
+                        "type": "number"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/new_prod_deployment": {
+      "post": {
+        "description": "deploy prompt to production",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "deployment_id": {
+                      "type": "string"
+                    },
+                    "adjustment_threashold": {
+                      "type": "number"
+                    },
+                    "eval_frequency": {
+                      "type": "number"
+                    },
+                    "alert_threshold": {
+                      "type": "number"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "deployment_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/get_prod_deployments": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "deployment_id": {
+                        "type": "string"
+                      },
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "model_id": {
+                        "type": "string"
+                      },
+                      "adjustment_threshold": {
+                        "type": "number"
+                      },
+                      "eval_frequency": {
+                        "type": "number"
+                      },
+                      "alert_threshold": {
+                        "type": "number"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/update_deployment": {
+      "post": {
+        "description": "update deployed prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "deployment_id": {
+                      "type": "string"
+                    },
+                    "prompt": {
+                        "type": "string"
+                    },
+                    "model_id": {
+                      "type": "string"
+                    },
+                    "adjustment_threashold": {
+                      "type": "number"
+                    },
+                    "eval_frequency": {
+                      "type": "number"
+                    },
+                    "alert_threshold": {
+                      "type": "number"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/delete_deployment": {
+      "post": {
+        "description": "delete deployed prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "deployment_id": {
+                      "type": "string"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/execute_deployment": {
+      "post": {
+        "description": "update deployed prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "deployment_id": {
+                      "type": "string"
+                    },
+                    "args": {
+                      "type": "object"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
