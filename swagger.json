@@ -59,6 +59,9 @@
                   "items": {
                     "type": "object",
                     "properties": {
+                      "connection_id": {
+                        "type": "string"
+                      },
                       "provider": {
                         "type": "string",
                         "example": "open-ai"
@@ -74,7 +77,127 @@
                       },
                       "date_created": {
                         "type": "string"
+                      },
+                      "nickname": {
+                        "type": "string"
+                      },
+                      "credential_previews": {
+                        "type": "string"
                       }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/update_connection_nickname": {
+      "post": {
+        "description": "update the nickname for a connection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "connection_id": {
+                        "type": "string"
+                    },
+                    "nickname" : {
+                        "type": "string"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/update_connection_credentials": {
+      "post": {
+        "description": "update the credentials for a connection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "connection_id": {
+                        "type": "string"
+                    },
+                    "credentials" : {
+                        "type": "object"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/remove_connection": {
+      "post": {
+        "description": "remove a connection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "connection_id": {
+                        "type": "string"
+                    }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
