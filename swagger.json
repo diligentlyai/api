@@ -4,11 +4,13 @@
     "title": "DiligentlyAI API",
     "version": "1.0"
   },
-  "servers": [{
-    "url": "https://www.aws-lambda-url.com"
-  }],
+  "servers": [
+    {
+      "url": "https://www.aws-lambda-url.com"
+    }
+  ],
   "paths": {
-    "/new_admin_user": {
+    "/admin_user": {
       "post": {
         "description": "creates a new admin user and creates their organization, called from auth0",
         "requestBody": {
@@ -17,12 +19,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email" : {
-                        "type": "string"
-                    }
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -47,21 +49,21 @@
         }
       }
     },
-    "/new_user": {
+    "/user": {
       "post": {
-        "description": "for an admin to create a new user and adds them to their organization",
+        "description": "for an admin to create a new user and add them to their organization",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email" : {
-                        "type": "string"
-                    }
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -84,26 +86,50 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/update_user": {
-      "post": {
-        "description": "updates a users details",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
+      },
+      "get": {
+        "description": "gets user details",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
                     "name": {
-                        "type": "string"
+                      "type": "string"
                     },
                     "email": {
-                        "type": "string"
+                      "type": "string"
                     },
-                    "user_id": {
-                        "type": "string"
+                    "org_name": {
+                      "type": "string"
                     }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "updates a user. The user_id is required. Only need to send the fields that should be updated.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -126,10 +152,8 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/delete_user": {
-      "post": {
+      },
+      "delete": {
         "description": "deletes a user",
         "requestBody": {
           "content": {
@@ -137,9 +161,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "user_id": {
-                        "type": "string"
-                    }
+                  "user_id": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -164,7 +188,7 @@
         }
       }
     },
-    "/new_connection": {
+    "/llm_connection": {
       "post": {
         "description": "add a new LLM connection with user credentials",
         "requestBody": {
@@ -173,12 +197,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "credentials" : {
-                        "type": "object"
-                    }
+                  "name": {
+                    "type": "string"
+                  },
+                  "credentials": {
+                    "type": "object"
+                  }
                 }
               }
             }
@@ -201,9 +225,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/get_connections": {
+      },
       "get": {
         "description": "gets user's LLM connections",
         "responses": {
@@ -227,9 +249,7 @@
                         "items": {
                           "type": "string"
                         },
-                        "example": [
-                          "gpt-4", "gpt-3.5"
-                        ]
+                        "example": ["gpt-4", "gpt-3.5"]
                       },
                       "date_created": {
                         "type": "string"
@@ -248,23 +268,24 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/update_connection_nickname": {
-      "post": {
-        "description": "update the nickname for a connection",
+      },
+      "put": {
+        "description": "updates a connection. The connection_id is required. Only need to send the fields that should be updated.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "connection_id": {
-                        "type": "string"
-                    },
-                    "nickname" : {
-                        "type": "string"
-                    }
+                  "connection_id": {
+                    "type": "string"
+                  },
+                  "nickname": {
+                    "type": "string"
+                  },
+                  "credentials": {
+                    "type": "object"
+                  }
                 }
               }
             }
@@ -287,49 +308,8 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/update_connection_credentials": {
-      "post": {
-        "description": "update the credentials for a connection",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                    "connection_id": {
-                        "type": "string"
-                    },
-                    "credentials" : {
-                        "type": "object"
-                    }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/remove_connection": {
-      "post": {
+      },
+      "delete": {
         "description": "remove a connection",
         "requestBody": {
           "content": {
@@ -337,9 +317,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "connection_id": {
-                        "type": "string"
-                    }
+                  "connection_id": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -364,7 +344,7 @@
         }
       }
     },
-    "/new_prompt": {
+    "/prompt": {
       "post": {
         "description": "make new playground/dev prompt",
         "requestBody": {
@@ -378,10 +358,10 @@
                     "example": "playground | dev"
                   },
                   "prompt": {
-                      "type": "string"
+                    "type": "string"
                   },
                   "name": {
-                      "type": "string"
+                    "type": "string"
                   }
                 }
               }
@@ -405,11 +385,9 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/update_prompt": {
-      "post": {
-        "description": "update playground/dev prompt",
+      },
+      "put": {
+        "description": "update playground/dev prompt. The prompt_id and env are required. Only need to send the fields that should be updated.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -427,7 +405,7 @@
                     "type": "string"
                   },
                   "name": {
-                      "type": "string"
+                    "type": "string"
                   }
                 }
               }
@@ -451,10 +429,8 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/delete_prompt": {
-      "post": {
+      },
+      "delete": {
         "description": "delete playground/dev prompt",
         "requestBody": {
           "content": {
@@ -491,11 +467,19 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/get_user_prompts": {
+      },
       "get": {
-        "description": "get playground prompts",
+        "description": "get playground / dev prompts",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "playground | dev"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -527,64 +511,34 @@
         }
       }
     },
-    "/get_dev_prompts": {
-      "get": {
-        "description": "get dev prompts for an org",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "prompt": {
-                        "type": "string"
-                      },
-                      "name": {
-                          "type": "string"
-                      },
-                      "date_created": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/set_prompt_test": {
-      "post": {
-        "description": "set playground/dev prompt tests",
+    "/prompt_test": {
+      "put": {
+        "description": "updates a prompt test. The prompt_id and env required. Only need to send the fields that should be updated.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "prompt_id": {
-                        "type": "string"
-                    },
-                    "test_cases" : {
-                        "type": "array",
-                        "items": {
-                          "type": "object"
-                        }
-                    },
-                    "model_ids": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "env": {
+                    "type": "string",
+                    "example": "playground | dev"
+                  },
+                  "test_cases": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
                     }
+                  },
+                  "model_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -609,7 +563,7 @@
         }
       }
     },
-    "/run_prompt_test": {
+    "/execute_prompt_test": {
       "post": {
         "description": "run playground/dev prompt test",
         "requestBody": {
@@ -618,9 +572,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "prompt_id": {
-                        "type": "string"
-                    }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "env": {
+                    "type": "string",
+                    "example": "playground | dev"
+                  }
                 }
               }
             }
@@ -631,44 +589,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "model_id": {
-                        "type": "string"
-                      },
-                      "test_case": {
-                        "type": "string"
-                      },
-                      "response": {
-                        "type": "string"
-                      },
-                      "response_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          },
-                          "verification_evaluation": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "prompt_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          }
-                        }
-                      }
+                  "type": "object",
+                  "properties": {
+                    "test_run_id": {
+                      "type": "string"
                     }
                   }
                 }
@@ -679,23 +603,33 @@
         }
       }
     },
-    "/get_test_results": {
-      "post": {
+    "/test_results": {
+      "get": {
         "description": "get playground/dev test results",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                    "filters": {
-                        "type": "object"
-                    }
-                }
-              }
-            }
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "playground | dev"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search"
           }
-        },
+        ],
         "responses": {
           "200": {
             "content": {
@@ -755,27 +689,63 @@
         }
       }
     },
-    "/new_qa_deployment": {
-      "post": {
-        "description": "deploy prompt to qa",
+    "/promote_to_dev": {
+      "put": {
+        "description": "deploy prompt to dev from playground",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "prompt_id": {
-                        "type": "string"
-                    },
-                    "model_id": {
-                      "type": "string"
-                    },
-                    "adjustment_threshold": {
-                      "type": "number"
-                    },
-                    "eval_frequency": {
-                      "type": "number"
+                  "prompt_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/promote_to_qa": {
+      "put": {
+        "description": "deploy prompt to qa from dev. the prompt_id and model_id are required as adjustment_threshold and eval_frequency can default to 0",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "adjustment_threshold": {
+                    "type": "number"
+                  },
+                  "eval_frequency": {
+                    "type": "number"
+                  }
                 }
               }
             }
@@ -793,9 +763,6 @@
                     },
                     "url": {
                       "type": "string"
-                    },
-                    "deployment_id": {
-                      "type": "string"
                     }
                   }
                 }
@@ -806,69 +773,30 @@
         }
       }
     },
-    "/get_qa_deployments": {
-      "get": {
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "deployment_id": {
-                        "type": "string"
-                      },
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "prompt": {
-                        "type": "string"
-                      },
-                      "model_id": {
-                        "type": "string"
-                      },
-                      "adjustment_threshold": {
-                        "type": "number"
-                      },
-                      "eval_frequency": {
-                        "type": "number"
-                      },
-                      "date_created": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/new_prod_deployment": {
-      "post": {
-        "description": "deploy prompt to production",
+    "/promote_to_prod": {
+      "put": {
+        "description": "deploy prompt to prod. only the prompt_id is required alert_threshold can default to 0 and the rest can be pulled from QA",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "deployment_id": {
-                      "type": "string"
-                    },
-                    "adjustment_threashold": {
-                      "type": "number"
-                    },
-                    "eval_frequency": {
-                      "type": "number"
-                    },
-                    "alert_threshold": {
-                      "type": "number"
-                    }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "adjustment_threshold": {
+                    "type": "number"
+                  },
+                  "alert_threshold": {
+                    "type": "number"
+                  },
+                  "eval_frequency": {
+                    "type": "number"
+                  }
                 }
               }
             }
@@ -886,9 +814,6 @@
                     },
                     "url": {
                       "type": "string"
-                    },
-                    "deployment_id": {
-                      "type": "string"
                     }
                   }
                 }
@@ -899,8 +824,19 @@
         }
       }
     },
-    "/get_prod_deployments": {
+    "/deployment": {
       "get": {
+        "description": "get qa or prod deployments",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "qa | prod"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -910,9 +846,6 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "deployment_id": {
-                        "type": "string"
-                      },
                       "prompt_id": {
                         "type": "string"
                       },
@@ -942,35 +875,37 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/update_deployment": {
-      "post": {
-        "description": "update deployed prompt",
+      },
+      "put": {
+        "description": "updates a deployed prompt. The prompt_id and env required. Only need to send the fields that should be updated.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "deployment_id": {
-                      "type": "string"
-                    },
-                    "prompt": {
-                        "type": "string"
-                    },
-                    "model_id": {
-                      "type": "string"
-                    },
-                    "adjustment_threashold": {
-                      "type": "number"
-                    },
-                    "eval_frequency": {
-                      "type": "number"
-                    },
-                    "alert_threshold": {
-                      "type": "number"
-                    }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "env": {
+                    "type": "string",
+                    "example": "qa | prod"
+                  },
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "adjustment_threashold": {
+                    "type": "number"
+                  },
+                  "eval_frequency": {
+                    "type": "number"
+                  },
+                  "alert_threshold": {
+                    "type": "number"
+                  }
                 }
               }
             }
@@ -993,10 +928,8 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/delete_deployment": {
-      "post": {
+      },
+      "delete": {
         "description": "delete deployed prompt",
         "requestBody": {
           "content": {
@@ -1004,9 +937,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                    "deployment_id": {
-                      "type": "string"
-                    }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "env": {
+                    "type": "string",
+                    "example": "qa | prod"
+                  }
                 }
               }
             }
@@ -1033,19 +970,23 @@
     },
     "/execute_deployment": {
       "post": {
-        "description": "update deployed prompt",
+        "description": "run deployed prompt",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                    "deployment_id": {
-                      "type": "string"
-                    },
-                    "args": {
-                      "type": "object"
-                    }
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "args": {
+                    "type": "object"
+                  },
+                  "env": {
+                    "type": "string",
+                    "example": "qa | prod"
+                  }
                 }
               }
             }
@@ -1060,6 +1001,89 @@
                   "properties": {
                     "response": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/evaluations": {
+      "get": {
+        "description": "get qa/prod evaluations. Non 100% eval_frequency will result in some prompts / responses having null evaluations",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "playground | dev"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "response": {
+                        "type": "string"
+                      },
+                      "response_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          },
+                          "verification_evaluation": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "prompt_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
