@@ -6,13 +6,13 @@
   },
   "servers": [
     {
-      "url": "https://www.aws-lambda-url.com"
+      "url": "https://v64kqp7gpz4bij5oq3iy7a3ph40dphzp.lambda-url.us-east-1.on.aws/ "
     }
   ],
   "paths": {
     "/admin_user": {
       "post": {
-        "description": "creates a new admin user and creates their organization, called from auth0",
+        "description": "creates a new admin user and creates their organization - called from auth0",
         "requestBody": {
           "content": {
             "application/json": {
@@ -49,9 +49,173 @@
         }
       }
     },
+    "/self": {
+      "get": {
+        "description": "gets one's own details",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "is_admin": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "updates ones own account. Only need to send the fields that should be updated.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/org": {
+      "get": {
+        "description": "gets org details",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "plan_id": {
+                      "type": "string"
+                    },
+                    "subscription_id": {
+                      "type": "string"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "renewal_date": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "updates a org. Can only change the name. - admin only",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "gets all users in org - admin only",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/user": {
       "post": {
-        "description": "for an admin to create a new user and add them to their organization",
+        "description": "creates a new user, adds them to org as well - admin only",
         "requestBody": {
           "content": {
             "application/json": {
@@ -87,34 +251,8 @@
           }
         }
       },
-      "get": {
-        "description": "gets user details",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "org_name": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
       "put": {
-        "description": "updates a user. The user_id is required. Only need to send the fields that should be updated.",
+        "description": "updates a user. The user_id is required. Only need to send the fields that should be updated. - admin only",
         "requestBody": {
           "content": {
             "application/json": {
@@ -154,21 +292,16 @@
         }
       },
       "delete": {
-        "description": "deletes a user",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+        "description": "deletes a user - admin only",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "user_id"
           }
-        },
+        ],
         "responses": {
           "200": {
             "content": {
@@ -188,46 +321,9 @@
         }
       }
     },
-    "/llm_connection": {
-      "post": {
-        "description": "add a new LLM connection with user credentials",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "credentials": {
-                    "type": "object"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
+    "/llm_connections": {
       "get": {
-        "description": "gets user's LLM connections",
+        "description": "gets org's LLM connections",
         "responses": {
           "200": {
             "content": {
@@ -260,6 +356,48 @@
                       "credential_previews": {
                         "type": "string"
                       }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/llm_connection": {
+      "post": {
+        "description": "add a new LLM connection",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "type": "string"
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "credentials": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
@@ -311,20 +449,15 @@
       },
       "delete": {
         "description": "remove a connection",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "connection_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "connection_id"
           }
-        },
+        ],
         "responses": {
           "200": {
             "content": {
@@ -344,9 +477,111 @@
         }
       }
     },
+    "/prompts": {
+      "get": {
+        "description": "get playground / dev prompts",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "playground | dev"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/prompt": {
+      "get": {
+        "description": "get playground / dev prompt by id",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "playground | dev"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "prompt": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      },
+                      "test_cases": {
+                        "type": "object"
+                      },
+                      "model_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
       "post": {
-        "description": "make new playground/dev prompt",
+        "description": "make new playground/dev prompt. test cases and model_ids are optional (assumed empty)",
         "requestBody": {
           "content": {
             "application/json": {
@@ -362,6 +597,15 @@
                   },
                   "name": {
                     "type": "string"
+                  },
+                  "test_cases": {
+                    "type": "object"
+                  },
+                  "model_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -406,6 +650,15 @@
                   },
                   "name": {
                     "type": "string"
+                  },
+                  "test_cases": {
+                    "type": "object"
+                  },
+                  "model_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -432,44 +685,6 @@
       },
       "delete": {
         "description": "delete playground/dev prompt",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "env": {
-                    "type": "string",
-                    "example": "playground | dev"
-                  },
-                  "prompt_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "description": "get playground / dev prompts",
         "parameters": [
           {
             "schema": {
@@ -478,72 +693,15 @@
             "in": "query",
             "name": "env",
             "example": "playground | dev"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
           }
         ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "prompt": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "date_created": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/prompt_test": {
-      "put": {
-        "description": "updates a prompt test. The prompt_id and env required. Only need to send the fields that should be updated.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "prompt_id": {
-                    "type": "string"
-                  },
-                  "env": {
-                    "type": "string",
-                    "example": "playground | dev"
-                  },
-                  "test_cases": {
-                    "type": "array",
-                    "items": {
-                      "type": "object"
-                    }
-                  },
-                  "model_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "content": {
@@ -824,7 +982,7 @@
         }
       }
     },
-    "/deployment": {
+    "/deployments": {
       "get": {
         "description": "get qa or prod deployments",
         "parameters": [
@@ -835,6 +993,13 @@
             "in": "query",
             "name": "env",
             "example": "qa | prod"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
           }
         ],
         "responses": {
@@ -867,6 +1032,63 @@
                       "date_created": {
                         "type": "string"
                       }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deployment": {
+      "get": {
+        "description": "get qa or prod deployment",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "qa | prod"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt_id": {
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "type": "string"
+                    },
+                    "model_id": {
+                      "type": "string"
+                    },
+                    "adjustment_threshold": {
+                      "type": "number"
+                    },
+                    "eval_frequency": {
+                      "type": "number"
+                    },
+                    "alert_threshold": {
+                      "type": "number"
+                    },
+                    "date_created": {
+                      "type": "string"
                     }
                   }
                 }
@@ -931,24 +1153,23 @@
       },
       "delete": {
         "description": "delete deployed prompt",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "prompt_id": {
-                    "type": "string"
-                  },
-                  "env": {
-                    "type": "string",
-                    "example": "qa | prod"
-                  }
-                }
-              }
-            }
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "env",
+            "example": "qa | prod"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_id"
           }
-        },
+        ],
         "responses": {
           "200": {
             "content": {
