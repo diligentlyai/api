@@ -416,6 +416,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "env": {
+                    "type": "string",
+                    "example": "playground | dev"
+                  },
                   "prompt": {
                     "type": "string"
                   },
@@ -458,6 +462,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "env": {
+                    "type": "string",
+                    "example": "playground | dev"
+                  },
                   "prompt_id": {
                     "type": "string"
                   }
