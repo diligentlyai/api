@@ -546,30 +546,27 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "prompt_id": {
+                  "type": "object",
+                  "properties": {
+                    "prompt_id": {
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "date_created": {
+                      "type": "string"
+                    },
+                    "test_cases": {
+                      "type": "object"
+                    },
+                    "model_ids": {
+                      "type": "array",
+                      "items": {
                         "type": "string"
-                      },
-                      "prompt": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "date_created": {
-                        "type": "string"
-                      },
-                      "test_cases": {
-                        "type": "object"
-                      },
-                      "model_ids": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
                       }
                     }
                   }
