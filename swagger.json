@@ -746,92 +746,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "test_run_id": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/test_results": {
-      "get": {
-        "description": "get playground/dev test results",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "env",
-            "example": "playground | dev"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "prompt_id"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "search"
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "model_id": {
-                        "type": "string"
-                      },
-                      "test_case": {
-                        "type": "string"
-                      },
-                      "response": {
-                        "type": "string"
-                      },
-                      "response_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          },
-                          "verification_evaluation": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "prompt_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          }
-                        }
-                      },
-                      "date_created": {
+                    "exec_ids": {
+                      "type": "array",
+                      "items": {
                         "type": "string"
                       }
                     }
@@ -990,13 +907,6 @@
             "in": "query",
             "name": "env",
             "example": "qa | prod"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "prompt_id"
           }
         ],
         "responses": {
@@ -1116,7 +1026,7 @@
                   "model_id": {
                     "type": "string"
                   },
-                  "adjustment_threashold": {
+                  "adjustment_threshold": {
                     "type": "number"
                   },
                   "eval_frequency": {
@@ -1231,7 +1141,7 @@
     },
     "/evaluations": {
       "get": {
-        "description": "get qa/prod evaluations. Non 100% eval_frequency will result in some prompts / responses having null evaluations",
+        "description": "get playground/dev/qa/prod evaluations. Non 100% eval_frequency will result in some prompts / responses having null evaluations",
         "parameters": [
           {
             "schema": {
@@ -1239,7 +1149,7 @@
             },
             "in": "query",
             "name": "env",
-            "example": "playground | dev"
+            "example": "playground | dev | qa | prod"
           },
           {
             "schema": {
@@ -1247,6 +1157,13 @@
             },
             "in": "query",
             "name": "prompt_id"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "exec_id"
           },
           {
             "schema": {
@@ -1302,6 +1219,46 @@
                       "date_created": {
                         "type": "string"
                       }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/evaluate_execution": {
+      "post": {
+        "description": "execute prompt evaluation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "exec_id": {
+                    "type": "string"
+                  },
+                  "message_type": {
+                    "type": "string",
+                    "example": "prompt | response"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
                     }
                   }
                 }
