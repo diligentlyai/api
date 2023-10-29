@@ -847,7 +847,7 @@
     },
     "/promote_to_prod": {
       "put": {
-        "description": "deploy prompt to prod. only the prompt_id is required alert_threshold can default to 0 and the rest can be pulled from QA",
+        "description": "deploy prompt to prod. only the prompt_id is required. alert_threshold can default to 0 and the rest can be pulled from QA",
         "requestBody": {
           "content": {
             "application/json": {
@@ -855,9 +855,6 @@
                 "type": "object",
                 "properties": {
                   "prompt_id": {
-                    "type": "string"
-                  },
-                  "model_id": {
                     "type": "string"
                   },
                   "adjustment_threshold": {
