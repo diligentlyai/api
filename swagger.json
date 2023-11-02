@@ -1236,7 +1236,7 @@
                 "type": "object",
                 "properties": {
                   "prompt_id": {
-                    "type": "string | null"
+                    "type": "string"
                   },
                   "prompt": {
                     "type": "string",
@@ -1254,27 +1254,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "properties": {
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "exec_id": {
-                        "type": "string"
-                      },
-                      "prompt_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          }
+                    "prompt_id": {
+                      "type": "string"
+                    },
+                    "exec_id": {
+                      "type": "string"
+                    },
+                    "prompt_eval": {
+                      "type": "object",
+                      "properties": {
+                        "evaluation": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "number"
                         }
-                      },
-                      "date_created": {
-                        "type": "string"
                       }
+                    },
+                    "date_created": {
+                      "type": "string"
                     }
                   }
                 }
@@ -1295,10 +1293,10 @@
                 "type": "object",
                 "properties": {
                   "prompt_id": {
-                    "type": "string | null"
+                    "type": "string"
                   },
                   "exec_id": {
-                    "type": "string | null"
+                    "type": "string"
                   },
                   "prompt": {
                     "type": "string",
@@ -1316,27 +1314,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "properties": {
-                      "prompt_id": {
-                        "type": "string"
-                      },
-                      "exec_id": {
-                        "type": "string"
-                      },
-                      "response_eval": {
-                        "type": "object",
-                        "properties": {
-                          "evaluation": {
-                            "type": "string"
-                          },
-                          "score": {
-                            "type": "number"
-                          }
+                    "prompt_id": {
+                      "type": "string"
+                    },
+                    "exec_id": {
+                      "type": "string"
+                    },
+                    "response_eval": {
+                      "type": "object",
+                      "properties": {
+                        "evaluation": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "number"
                         }
-                      },
-                      "date_created": {
-                        "type": "string"
                       }
+                    },
+                    "date_created": {
+                      "type": "string"
                     }
                   }
                 }
