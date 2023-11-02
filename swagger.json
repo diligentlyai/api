@@ -1108,6 +1108,9 @@
                   "args": {
                     "type": "object"
                   },
+                  "messages": {
+                    "type": "array"
+                  }
                   "env": {
                     "type": "string",
                     "example": "qa | prod"
@@ -1241,6 +1244,10 @@
                   "prompt": {
                     "type": "string",
                     "example": "A full and complete, non-templated, prompt that is up for evaluation."
+                  },
+                  "messages": {
+                    "type": "array",
+                    "example": "All prior messages in the conversation. Optional."
                   }
                 }
               }
@@ -1301,6 +1308,10 @@
                   "response": {
                     "type": "string",
                     "example": "A response that came from a different LLM, and is up for evaluation."
+                  },
+                  "messages": {
+                    "type": "array",
+                    "example": "All prior messages in the conversation. Optional."
                   }
                 }
               }
