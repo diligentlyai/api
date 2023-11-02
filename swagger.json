@@ -1298,7 +1298,7 @@
                   "exec_id": {
                     "type": "string"
                   },
-                  "prompt": {
+                  "response": {
                     "type": "string",
                     "example": "A response that came from a different LLM, and is up for evaluation."
                   }
