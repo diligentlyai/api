@@ -1110,7 +1110,7 @@
                   },
                   "messages": {
                     "type": "array"
-                  }
+                  },
                   "env": {
                     "type": "string",
                     "example": "qa | prod"
