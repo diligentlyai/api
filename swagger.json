@@ -1226,9 +1226,130 @@
         }
       }
     },
-    "/evaluate_execution": {
+    "/evaluate_prompt": {
       "post": {
         "description": "execute prompt evaluation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string | null"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "example": "A full and complete, non-templated, prompt that is up for evaluation."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "exec_id": {
+                        "type": "string"
+                      },
+                      "prompt_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/evaluate_response": {
+      "post": {
+        "description": "execute response evaluation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string | null"
+                  },
+                  "exec_id": {
+                    "type": "string | null"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "example": "A response that came from a different LLM, and is up for evaluation."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "prompt_id": {
+                        "type": "string"
+                      },
+                      "exec_id": {
+                        "type": "string"
+                      },
+                      "response_eval": {
+                        "type": "object",
+                        "properties": {
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/evaluate_execution": {
+      "post": {
+        "description": "execute prompt or response evaluation",
         "requestBody": {
           "content": {
             "application/json": {
