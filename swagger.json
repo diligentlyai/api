@@ -1109,7 +1109,18 @@
                     "type": "object"
                   },
                   "messages": {
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   },
                   "env": {
                     "type": "string",
@@ -1247,7 +1258,17 @@
                   },
                   "messages": {
                     "type": "array",
-                    "example": "All prior messages in the conversation. Optional."
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -1311,7 +1332,17 @@
                   },
                   "messages": {
                     "type": "array",
-                    "example": "All prior messages in the conversation. Optional."
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 }
               }
