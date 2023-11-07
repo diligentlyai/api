@@ -1269,6 +1269,16 @@
                         }
                       }
                     }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "prompt_tokens": {
+                    "type": "number",
+                    "example": "123 | optional"
                   }
                 }
               }
@@ -1330,6 +1340,10 @@
                     "type": "string",
                     "example": "A response that came from a different LLM, and is up for evaluation."
                   },
+                  "model_id": {
+                    "type": "string",
+                    "example": "gpt-4-32k"
+                  },
                   "messages": {
                     "type": "array",
                     "items": {
@@ -1343,6 +1357,20 @@
                         }
                       }
                     }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "response_tokens": {
+                    "type": "number",
+                    "example": "123 | optional"
+                  },
+                  "run_time": {
+                    "type": "number",
+                    "example": "12 | optional"
                   }
                 }
               }
