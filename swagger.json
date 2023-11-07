@@ -1413,6 +1413,84 @@
         }
       }
     },
+    "/evaluate": {
+      "post": {
+        "description": "execute evaluation of a prompt/response pair",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "prompt": {
+                    "type": "string",
+                    "example": "A prompt that was sent to a LLM and is up for evaluation."
+                  },
+                  "response": {
+                    "type": "string",
+                    "example": "A response that came from a LLM, and is up for evaluation."
+                  },
+                  "model_id": {
+                    "type": "string",
+                    "example": "gpt-4-32k"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "run_time": {
+                    "type": "number",
+                    "example": "12 | optional"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt_id": {
+                      "type": "string"
+                    },
+                    "exec_id": {
+                      "type": "string"
+                    },
+                    "date_created": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/evaluate_execution": {
       "post": {
         "description": "execute prompt or response evaluation",
