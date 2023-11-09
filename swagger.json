@@ -1159,28 +1159,32 @@
               "type": "string"
             },
             "in": "query",
-            "name": "prompt_id"
+            "name": "prompt_id",
+            "example": "data_summary"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "date_created"
+            "name": "date_created",
+            "example": ">2023-12-23"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "name"
+            "name": "exec_id",
+            "example": "125343-3422-7655-7564-345263"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "score"
+            "name": "score",
+            "example": "=2"
           },
           {
             "schema": {
@@ -1190,7 +1194,8 @@
                   }
             },
             "in": "query",
-            "name": "model_ids"
+            "name": "model_ids",
+            "example": ["openai.gpt-4"]
           }
         ],
         "responses": {
@@ -1273,7 +1278,7 @@
                           }
                         }
                       },
-                      "prompt_eval": {
+                      "response_details": {
                         "type": "object",
                         "properties": {
                           "full_text": {
