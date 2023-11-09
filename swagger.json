@@ -1203,52 +1203,73 @@
                     "type": "object",
                     "properties": {
                       "prompt_id": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "4123-3242-4234-4365"
                       },
                       "exec_id": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "4123-3242-4234-4365"
                       },
                       "model_id": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "gpt-4"
                       },
                       "environment": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "adhoc"
                       },
                       "messages": {
                         "type": "array",
                         "items": {
-                          "type": "string"
-                        }
+                          "type": "object",
+                          "properties": {
+                            "role": {
+                              "type": "string"
+                            },
+                            "content": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "example": []
                       },
                       "tags": {
                         "type": "array",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": ["tag1", "tag2"]
                       },
                       "run_time": {
-                        "type": "string"
+                        "type": "number",
+                        "example": 12
                       },
                       "prompt_details": {
                         "type": "object",
                         "properties": {
                           "full_text": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "This is a long prompt with lots of characters."
                           },
                           "score": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 1
                           },
                           "tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 122
                           },
                           "evaluation": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "This is a long evaluation with lots of characters."
                           },
                           "eval_prompt_tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 122
                           },
                           "eval_response_tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 176
                           }
                         }
                       },
@@ -1256,22 +1277,28 @@
                         "type": "object",
                         "properties": {
                           "full_text": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "This is a long response with lots of characters."
                           },
                           "score": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 1
                           },
                           "tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 122
                           },
                           "evaluation": {
-                            "type": "string"
+                            "type": "string",
+                            "example": "This is a long evaluation with lots of characters."
                           },
                           "eval_prompt_tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 122
                           },
                           "eval_response_tokens": {
-                            "type": "number"
+                            "type": "number",
+                            "example": 176
                           }
                         }
                       },
