@@ -1303,7 +1303,8 @@
                         }
                       },
                       "date_created": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "11-24-2023"
                       }
                     }
                   }
