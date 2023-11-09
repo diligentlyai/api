@@ -1152,16 +1152,8 @@
     },
     "/evaluations": {
       "get": {
-        "description": "get playground/dev/qa/prod evaluations. Non 100% eval_frequency will result in some prompts / responses having null evaluations",
+        "description": "get evaluations.",
         "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "env",
-            "example": "playground | dev | qa | prod"
-          },
           {
             "schema": {
               "type": "string"
@@ -1174,14 +1166,31 @@
               "type": "string"
             },
             "in": "query",
-            "name": "exec_id"
+            "name": "date_created"
           },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
-            "name": "search"
+            "name": "name"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "score"
+          },
+          {
+            "schema": {
+              "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+            },
+            "in": "query",
+            "name": "model_ids"
           }
         ],
         "responses": {
@@ -1196,33 +1205,72 @@
                       "prompt_id": {
                         "type": "string"
                       },
-                      "prompt": {
+                      "exec_id": {
                         "type": "string"
                       },
-                      "response": {
+                      "model_id": {
                         "type": "string"
                       },
-                      "response_eval": {
+                      "environment": {
+                        "type": "string"
+                      },
+                      "messages": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "run_time": {
+                        "type": "string"
+                      },
+                      "prompt_details": {
                         "type": "object",
                         "properties": {
-                          "evaluation": {
+                          "full_text": {
                             "type": "string"
                           },
                           "score": {
                             "type": "number"
                           },
-                          "verification_evaluation": {
+                          "tokens": {
+                            "type": "number"
+                          },
+                          "evaluation": {
                             "type": "string"
+                          },
+                          "eval_prompt_tokens": {
+                            "type": "number"
+                          },
+                          "eval_response_tokens": {
+                            "type": "number"
                           }
                         }
                       },
                       "prompt_eval": {
                         "type": "object",
                         "properties": {
-                          "evaluation": {
+                          "full_text": {
                             "type": "string"
                           },
                           "score": {
+                            "type": "number"
+                          },
+                          "tokens": {
+                            "type": "number"
+                          },
+                          "evaluation": {
+                            "type": "string"
+                          },
+                          "eval_prompt_tokens": {
+                            "type": "number"
+                          },
+                          "eval_response_tokens": {
                             "type": "number"
                           }
                         }
