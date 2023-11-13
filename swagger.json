@@ -1168,7 +1168,7 @@
             },
             "in": "query",
             "name": "date_created",
-            "example": ">2023-12-23"
+            "example": "gt2023-12-23"
           },
           {
             "schema": {
@@ -1183,8 +1183,16 @@
               "type": "string"
             },
             "in": "query",
-            "name": "score",
-            "example": "=2"
+            "name": "response_score",
+            "example": "eq2"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "prompt_score",
+            "example": "lt8"
           },
           {
             "schema": {
@@ -1229,14 +1237,15 @@
                           "type": "object",
                           "properties": {
                             "role": {
-                              "type": "string"
+                              "type": "string",
+                              "example": "user"
                             },
                             "content": {
-                              "type": "string"
+                              "type": "string",
+                              "example": "what is the meaning of life?"
                             }
                           }
-                        },
-                        "example": []
+                        }
                       },
                       "tags": {
                         "type": "array",
