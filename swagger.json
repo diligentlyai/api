@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://v64kqp7gpz4bij5oq3iy7a3ph40dphzp.lambda-url.us-east-1.on.aws/ "
+      "url": "https://api.diligently.ai/"
     }
   ],
   "paths": {
