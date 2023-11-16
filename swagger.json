@@ -1204,6 +1204,17 @@
             "in": "query",
             "name": "model_ids",
             "example": ["openai.gpt-4"]
+          },
+          {
+            "schema": {
+              "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+            },
+            "in": "query",
+            "name": "tags",
+            "example": ["user_id:2341", "test_tag"]
           }
         ],
         "responses": {
