@@ -1196,25 +1196,21 @@
           },
           {
             "schema": {
-              "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+              "type": "string"
             },
             "in": "query",
             "name": "model_ids",
-            "example": ["openai.gpt-4"]
+            "description": "comma seperated",
+            "example": "openai.gpt-4,openai.gpt-3.5"
           },
           {
             "schema": {
-              "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+              "type": "string"
             },
             "in": "query",
             "name": "tags",
-            "example": ["user_id:2341", "test_tag"]
+            "description": "comma seperated",
+            "example": "user_id:2341,test_tag"
           }
         ],
         "responses": {
