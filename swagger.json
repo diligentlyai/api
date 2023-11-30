@@ -338,8 +338,16 @@
               "type": "string"
             },
             "in": "query",
-            "name": "date_created",
-            "example": "gt2023-12-23"
+            "name": "start_date",
+            "example": "2023-12-23T12:32:21"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "end_date",
+            "example": "2023-12-23T12:33:21"
           },
           {
             "schema": {
