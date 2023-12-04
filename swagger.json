@@ -646,7 +646,7 @@
                   },
                   "run_time": {
                     "type": "number",
-                    "example": "12 | optional"
+                    "example": 12
                   }
                 }
               }
@@ -735,7 +735,7 @@
                   },
                   "run_time": {
                     "type": "number",
-                    "example": "12 | optional"
+                    "example": 12
                   }
                 }
               }
