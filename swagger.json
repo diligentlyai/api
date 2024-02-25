@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "DiligentlyAI API",
-    "version": "1.0"
+    "version": "1.1"
   },
   "servers": [
     {
@@ -10,181 +10,9 @@
     }
   ],
   "paths": {
-    "/admin_user": {
-      "post": {
-        "description": "creates a new admin user and creates their organization - called from auth0",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/self": {
+    "/systems": {
       "get": {
-        "description": "gets one's own details",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "is_admin": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "description": "updates ones own account. Only need to send the fields that should be updated.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/org": {
-      "get": {
-        "description": "gets org details",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "plan_id": {
-                      "type": "string"
-                    },
-                    "subscription_id": {
-                      "type": "string"
-                    },
-                    "created_date": {
-                      "type": "string"
-                    },
-                    "renewal_date": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "description": "updates a org. Can only change the name. - admin only",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "description": "gets all users in org - admin only",
+        "description": "Get a list of all systems that are available for use.",
         "responses": {
           "200": {
             "content": {
@@ -194,13 +22,19 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": {
+                      "system_id": {
                         "type": "string"
                       },
-                      "email": {
+                      "body": {
+                        "$ref": "#/components/fastlane/SystemStructure"
+                      },
+                      "created_date": {
                         "type": "string"
                       },
-                      "user_id": {
+                      "last_modified_date": {
+                        "type": "string"
+                      },
+                      "last_modified_user_id": {
                         "type": "string"
                       }
                     }
@@ -211,95 +45,59 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "description": "Create a new system configuration. This follows the FastlaneAI schema.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/fastlane/SystemStructure"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "system_id": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "$ref": "#/components/fastlane/SystemStructure"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
       }
     },
-    "/user": {
-      "post": {
-        "description": "creates a new user, adds them to org as well - admin only",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "description": "updates a user. The user_id is required. Only need to send the fields that should be updated. - admin only",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "user_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "description": "deletes a user - admin only",
+    "/systems/{system_id}/prompt_templates": {
+      "get": {
+        "description": "Get a list of all prompt templates that are available for a given system",
         "parameters": [
           {
             "schema": {
               "type": "string"
             },
-            "in": "query",
-            "name": "user_id"
+            "in": "path",
+            "name": "system_id"
           }
         ],
         "responses": {
@@ -309,8 +107,238 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
+                    "body": {
+                      "$ref": "#/components/fastlane/PromptTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Create or update the prompt templates for a given system.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "system_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/fastlane/PromptTemplate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "$ref": "#/components/fastlane/PromptTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/systems/{system_id}/database_templates": {
+      "get": {
+        "description": "Get a list of all database templates that are available for a given system",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "system_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "$ref": "#/components/fastlane/DatabaseTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Create or update the database templates for a given system.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "system_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/fastlane/DatabaseTemplate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "$ref": "#/components/fastlane/DatabaseTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/systems/{system_id}/user_input_templates": {
+      "get": {
+        "description": "Get a list of all user input templates that are available for a given system",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "system_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "$ref": "#/components/fastlane/UserInputTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Create or update the user input templates for a given system.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "system_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/fastlane/UserInputTemplate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "$ref": "#/components/fastlane/UserInputTemplate"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_modified_date": {
+                      "type": "string"
+                    },
+                    "last_modified_user_id": {
+                      "type": "string"
                     }
                   }
                 }
@@ -323,7 +351,7 @@
     },
     "/evaluations": {
       "get": {
-        "description": "get evaluations.",
+        "description": "Search for evaluations based on various parameters. If no parameters are provided, the most recent 1,000 evaluations are returned.",
         "parameters": [
           {
             "schema": {
@@ -514,184 +542,9 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/evaluate_prompt": {
+      },
       "post": {
-        "description": "execute prompt evaluation",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "prompt_id": {
-                    "type": "string"
-                  },
-                  "prompt": {
-                    "type": "string",
-                    "example": "A full and complete, non-templated, prompt that is up for evaluation."
-                  },
-                  "messages": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "role": {
-                          "type": "string"
-                        },
-                        "content": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "prompt_tokens": {
-                    "type": "number",
-                    "example": "123 | optional"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "prompt_id": {
-                      "type": "string"
-                    },
-                    "exec_id": {
-                      "type": "string"
-                    },
-                    "prompt_eval": {
-                      "type": "object",
-                      "properties": {
-                        "evaluation": {
-                          "type": "string"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      }
-                    },
-                    "date_created": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/evaluate_response": {
-      "post": {
-        "description": "execute response evaluation",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "prompt_id": {
-                    "type": "string"
-                  },
-                  "exec_id": {
-                    "type": "string"
-                  },
-                  "response": {
-                    "type": "string",
-                    "example": "A response that came from a different LLM, and is up for evaluation."
-                  },
-                  "model_id": {
-                    "type": "string",
-                    "example": "gpt-4-32k"
-                  },
-                  "messages": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "role": {
-                          "type": "string"
-                        },
-                        "content": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "tags": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "response_tokens": {
-                    "type": "number",
-                    "example": "123 | optional"
-                  },
-                  "run_time": {
-                    "type": "number",
-                    "example": 12
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "prompt_id": {
-                      "type": "string"
-                    },
-                    "exec_id": {
-                      "type": "string"
-                    },
-                    "response_eval": {
-                      "type": "object",
-                      "properties": {
-                        "evaluation": {
-                          "type": "string"
-                        },
-                        "score": {
-                          "type": "number"
-                        }
-                      }
-                    },
-                    "date_created": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            },
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/evaluate": {
-      "post": {
-        "description": "execute evaluation of a prompt/response pair",
+        "description": "Create a new evaluation. This is used to evaluate a prompt and response pair.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -749,10 +602,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "prompt_id": {
+                    "evaluation_id": {
                       "type": "string"
                     },
-                    "exec_id": {
+                    "prompt_id": {
                       "type": "string"
                     },
                     "date_created": {
@@ -767,27 +620,49 @@
         }
       }
     },
-    "/api_key": {
+    "/self": {
       "get": {
-        "description": "gets all of the api_keys",
+        "description": "Get user details for the currently authenticated user",
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "api_key": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "date_created": {
-                        "type": "string"
-                      }
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "is_admin": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/org": {
+      "get": {
+        "description": "Returns information about the registered organization for your account.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_date": {
+                      "type": "string"
                     }
                   }
                 }
@@ -797,8 +672,8 @@
           }
         }
       },
-      "post": {
-        "description": "make a new api key",
+      "put": {
+        "description": "Update the name of your organization.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -822,11 +697,165 @@
                   "properties": {
                     "success": {
                       "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "Lists all user accounts in your organization.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user_id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "date_created": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new user account and adds them to your organization.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_id": {
+                      "type": "string"
                     },
-                    "api_key": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
                       "type": "string"
                     },
                     "date_created": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/MissingRequiredFields"
+          }
+        }
+      }
+    },
+    "/api_keys": {
+      "get": {
+        "description": "Gets a list of all api keys for your organization.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "api_key": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "created_date": {
+                        "type": "string"
+                      },
+                      "last_used_date": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new api key for your organization.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "api_key": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_date": {
+                      "type": "string"
+                    },
+                    "last_used_date": {
                       "type": "string"
                     }
                   }
@@ -838,7 +867,7 @@
         }
       },
       "delete": {
-        "description": "deletes an api_key",
+        "description": "Deletes an api key for your organization. This action is irreversible.",
         "parameters": [
           {
             "schema": {
@@ -863,6 +892,200 @@
               }
             },
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "description": "An endpoint that will confirm the API is running and accessible.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "MissingRequiredFields": {
+        "description": "Missing Required Fields",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fastlane": {
+      "SystemStructure": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "terminating_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "inner_nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "connections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "object"
+                },
+                "to": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PromptTemplate": {
+        "type": "object",
+        "properties": {
+          "templates": {
+            "type": "object",
+            "properties": {
+              "my-prompt-id": {
+                "type": "object",
+                "properties": {
+                  "prompt_id": {
+                    "type": "string"
+                  },
+                  "prompt_template": {
+                    "type": "string"
+                  },
+                  "variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DatabaseTemplate": {
+        "type": "object",
+        "properties": {
+          "templates": {
+            "type": "object",
+            "properties": {
+              "my-query-template-id": {
+                "type": "object",
+                "properties": {
+                  "query_template_id": {
+                    "type": "string"
+                  },
+                  "search_query_template": {
+                    "type": "string"
+                  },
+                  "result_count": {
+                    "type": "number"
+                  },
+                  "variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserInputTemplate": {
+        "type": "object",
+        "properties": {
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "my-input-id": {
+                "type": "object",
+                "properties": {
+                  "input_id": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }
